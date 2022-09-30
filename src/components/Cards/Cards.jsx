@@ -7,7 +7,6 @@ import styles from "./Cards.module.css";
 
 
 const Cards = ({data}) => {
-    console.log(data)
     return (
         <div className={style.container}>
              <Grid container spacing={3} justify="center" sx={{my:"10px"}}>

@@ -8,3 +8,12 @@ export const fetchData = async () => {
     return response;
   } catch (error) {}
 };
+
+export const fetchDailyData = async () => {
+  try {
+    const { data } = await axios.get(`${url}/daily`);
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
