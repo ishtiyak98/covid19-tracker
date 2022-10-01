@@ -11,7 +11,7 @@ function App() {
   const options = {
     method: "GET",
     headers: {
-      'X-RapidAPI-Key': '2568449945msh39f6de6042c2a14p10ad17jsnebc8624d3f6d',
+      'X-RapidAPI-Key': `${process.env.REACT_APP_apiKey}`,
       'X-RapidAPI-Host': 'covid-19-tracking.p.rapidapi.com'
     },
   };
