@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { fetchDailyData } from '../../api';
 import styles from "./Chart.module.css";
 import {
     Chart as ChartJS,
@@ -7,32 +6,27 @@ import {
     LinearScale,
     PointElement,
     LineElement,
+    BarElement,
     Title,
     Tooltip,
     Legend,
   } from 'chart.js';
-  import { Line } from 'react-chartjs-2';
+  import { Line, Bar } from 'react-chartjs-2';
 
   ChartJS.register(
     CategoryScale,
     LinearScale,
     PointElement,
     LineElement,
+    BarElement,
     Title,
     Tooltip,
     Legend
   );
   
-const Chart = () => {
+const Chart = ({country, countryName}) => {
     const [dailyData, setDailyData] = useState([]);
     useEffect(()=>{
-        // const fetchAPI = async ()=> {
-        //     const initialDailyData = await fetchDailyData();
-        //     setDailyData(initialDailyData);
-        // }
-        
-        // fetchAPI();
-
         fetch("https://covid19.mathdro.id/api/daily")
         .then(res=> res.json())
         .then(data => setDailyData(data))
@@ -61,11 +55,40 @@ const Chart = () => {
             }}
         >
         </Line>
-        : <h2>Error</h2>
+        : <h2>Loading</h2>
     );
+
+    console.log("ascac",country?.confirmed?.value);
+    const barChart = (
+        country !== "global" &&
+        <Bar
+            data={{
+                labels: ['Infected', 'Recovered', 'Deaths'],
+                datasets: [{
+                    data: [country?.confirmed?.value, country?.recovered?.value, country?.deaths?.value],
+                    label: "Infected",
+                    backgroundColor: ['rgba(0, 0, 255, 0.5)', 'rgba(0, 255, 0, 0.5)', 'rgba(255, 0, 0, 0.5)'],
+                }],
+            }}
+            options = {{
+                responsive: true,
+                plugins: {
+                  
+                  title: {
+                    display: true,
+                    text: `Current Situation in ${countryName}`,
+                  },
+                },
+              }}
+        >
+        </Bar>
+            
+    );
+              console.log("countryName: ",countryName);
     return (
         <div className={styles.container}>
-            {lineChart}
+            {
+            countryName==="global"?lineChart:barChart}
         </div>
     );
 };

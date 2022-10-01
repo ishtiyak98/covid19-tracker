@@ -8,8 +8,8 @@ import styles from "./Cards.module.css";
 
 const Cards = ({data}) => {
     return (
-        <div className={style.container}>
-             <Grid container spacing={3} justify="center" sx={{my:"10px"}}>
+        <div>
+             <Grid container spacing={3} justify="center" sx={{mt:"10px", mb:"50px" }}>
                 <Grid item xs={12} md={4}>
                     <Card sx={{ minWidth: 275 }} className={cx(styles.card, styles.infected)}>
                         <CardContent>

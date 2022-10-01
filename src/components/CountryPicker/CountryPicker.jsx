@@ -2,7 +2,7 @@ import { FormControl, NativeSelect } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import styles from "./CountryPicker.module.css";
 
-const CountryPicker = () => {
+const CountryPicker = ({handleCountryChange}) => {
     const [countries, setCountries] = useState({})
 
     useEffect(()=>{
@@ -11,12 +11,11 @@ const CountryPicker = () => {
         .then(data => setCountries(data))
     },[setCountries]);
 
-    // console.log(countries?.countries?.map(country => country.name));
 
     return (
         <FormControl className={styles.formControl}>
-            <NativeSelect>
-                <option value={"daily"}>Global</option>
+            <NativeSelect defaultValue="" onChange={(e)=> handleCountryChange(e.target.value)}>
+                <option value={"global"}>Global</option>
                 {
                     countries?.countries?.map((country, index) => <option key={index} value={country.name}>{country.name}</option>)
                 }
