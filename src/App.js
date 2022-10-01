@@ -2,6 +2,7 @@ import { Cards, Chart, CountryPicker } from "./components";
 import styles from "./App.module.css";
 import { useEffect, useState } from "react";
 import Logo from "./coronavirus_logo-2.png";
+import Swal from "sweetalert2";
 
 function App() {
   const [data, setData] = useState([]);
@@ -10,15 +11,29 @@ function App() {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "f797e919b6msh49a1a47246f3e22p1f3965jsn377a953987cf",
-      "X-RapidAPI-Host": "covid-19-tracking.p.rapidapi.com",
+      'X-RapidAPI-Key': '2568449945msh39f6de6042c2a14p10ad17jsnebc8624d3f6d',
+      'X-RapidAPI-Host': 'covid-19-tracking.p.rapidapi.com'
     },
   };
 
   useEffect(() => {
     fetch("https://covid-19-tracking.p.rapidapi.com/v1", options)
       .then((response) => response.json())
-      .then((data) => setData(data[0]));
+      .then((data) => {
+        console.log(data);
+        if (data.message) {
+          Swal.fire({
+            icon: "error",
+            title: "Only five requests per minute",
+            text: data.message,
+          });
+        } else {
+          setData(data[0]);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   console.log("data: ", data);
@@ -28,8 +43,17 @@ function App() {
     fetch(`https://covid-19-tracking.p.rapidapi.com/v1/${country}`, options)
       .then((response) => response.json())
       .then((data) => {
-        setCountry(data);
-        setData(data);
+        console.log(data);
+        if (data.message) {
+          Swal.fire({
+            icon: "error",
+            title: "Only five requests per minute",
+            text: data.message,
+          });
+        } else {
+          setCountry(data);
+          setData(data);
+        }
       })
       .catch((err) => console.error(err));
   };
