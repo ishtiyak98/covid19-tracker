@@ -15,9 +15,9 @@ const Cards = ({data}) => {
                         <CardContent>
                             <Typography align="center" color="textSecondary" gutterBottom>Infected</Typography>
                             <Typography align="center" variant="h4">
-                                <CountUp start={0} end={data?.confirmed?.value} duration={1.5} separator={","}></CountUp>
+                                <CountUp start={0} end={parseFloat(Object.values(data)[5])?parseFloat(Object.values(data)[5].replace(/,/g, '')):0} duration={1.5} separator={","}></CountUp>
                             </Typography>
-                            <Typography align="center" color="text-textSecondary">{new Date(data?.lastUpdate).toDateString()}</Typography>
+                            <Typography align="center" color="text-textSecondary">{new Date(Object.values(data)[2]).toDateString()}</Typography>
                             <Typography align="center" variant="body2">Active cases from COVID-19</Typography>
                         </CardContent>
                     </Card>
@@ -27,9 +27,9 @@ const Cards = ({data}) => {
                         <CardContent>
                             <Typography align="center" color="textSecondary" gutterBottom>Recovered</Typography>
                             <Typography align="center" variant="h4">
-                                <CountUp start={0} end={data?.recovered?.value} duration={1.5} separator={","}></CountUp>
+                                <CountUp start={0} end={parseFloat(Object.values(data)[5])?parseFloat(Object.values(data)[7].replace(/,/g, '')):0} duration={1.5} separator={","}></CountUp>
                             </Typography>
-                            <Typography align="center" color="text-textSecondary">{new Date(data?.lastUpdate).toDateString()}</Typography>
+                            <Typography align="center" color="text-textSecondary">{new Date(Object.values(data)[2]).toDateString()}</Typography>
                             <Typography align="center" variant="body2">Recoveries from COVID-19</Typography>
                         </CardContent>
                     </Card>
@@ -39,9 +39,9 @@ const Cards = ({data}) => {
                         <CardContent>
                             <Typography align="center" color="textSecondary" gutterBottom>Deaths</Typography>
                             <Typography align="center" variant="h4">
-                                <CountUp start={0} end={data?.deaths?.value} duration={1.5} separator={","}></CountUp>
+                                <CountUp start={0} end={parseFloat(Object.values(data)[7])?parseFloat(Object.values(data)[6].replace(/,/g, '')):0} duration={1.5} separator={","}></CountUp>
                             </Typography>
-                            <Typography align="center" color="text-textSecondary">{new Date(data?.lastUpdate).toDateString()}</Typography>
+                            <Typography align="center" color="text-textSecondary">{new Date(Object.values(data)[2]).toDateString()}</Typography>
                             <Typography align="center" variant="body2">Deaths by COVID-19</Typography>
                         </CardContent>
                     </Card>

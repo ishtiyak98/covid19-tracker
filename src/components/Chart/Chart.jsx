@@ -32,8 +32,6 @@ const Chart = ({country, countryName}) => {
         .then(data => setDailyData(data))
     },[]);
 
-    console.log(dailyData);
-
     const lineChart = (
         dailyData.length !== 0 ?
         <Line
@@ -58,22 +56,21 @@ const Chart = ({country, countryName}) => {
         : <h2>Loading</h2>
     );
 
-    console.log("ascac",country?.confirmed?.value);
     const barChart = (
         country !== "global" &&
         <Bar
             data={{
                 labels: ['Infected', 'Recovered', 'Deaths'],
                 datasets: [{
-                    data: [country?.confirmed?.value, country?.recovered?.value, country?.deaths?.value],
-                    label: "Infected",
+                    data: [parseFloat(Object.values(country)[5])?parseFloat(Object.values(country)[5].replace(/,/g, '')):0, parseFloat(Object.values(country)[7])?parseFloat(Object.values(country)[7].replace(/,/g, '')):0, parseFloat(Object.values(country)[6])?parseFloat(Object.values(country)[6].replace(/,/g, '')):0],
+                    label: ["Infected","Recovered","Deaths"],
                     backgroundColor: ['rgba(0, 0, 255, 0.5)', 'rgba(0, 255, 0, 0.5)', 'rgba(255, 0, 0, 0.5)'],
                 }],
             }}
             options = {{
                 responsive: true,
                 plugins: {
-                  
+                    legend: { display: false },
                   title: {
                     display: true,
                     text: `Current Situation in ${countryName}`,
@@ -84,7 +81,6 @@ const Chart = ({country, countryName}) => {
         </Bar>
             
     );
-              console.log("countryName: ",countryName);
     return (
         <div className={styles.container}>
             {
